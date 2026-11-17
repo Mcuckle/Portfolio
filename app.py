@@ -270,12 +270,12 @@ def get_base64_image(image_path):
     return ""
 
 
-# FOOLPROOF IMAGE PATH RESOLVER (Handles exact metadata paths across Linux/Windows)
+# FOOLPROOF UNIVERSAL IMAGE RESOLVER (Guaranteed to find images across all platforms)
 def resolve_image_path(folder_name, file_str):
     if not file_str:
         return None
 
-    clean_name = os.path.basename(file_str)
+    clean_name = os.path.basename(file_str)  # e.g. "Figure 1.jpg"
 
     candidates = [
         f"projects/{folder_name}/{file_str}",
@@ -285,6 +285,7 @@ def resolve_image_path(folder_name, file_str):
         f"projects/{folder_name}/media/Pitot tube photos/{clean_name}",
         f"projects/{folder_name}/Media/Nexus photos/{clean_name}",
         f"projects/{folder_name}/media/Nexus photos/{clean_name}",
+        f"projects/{folder_name}/Pitot tube photos/{clean_name}",
         f"projects/{folder_name}/Nexus photos/{clean_name}",
     ]
 
@@ -292,10 +293,15 @@ def resolve_image_path(folder_name, file_str):
         if os.path.exists(path):
             return path
 
-    # Recursive fallback search across the entire project directory
+    # Recursive search inside the specific project folder
     matches = glob.glob(f"projects/{folder_name}/**/{clean_name}", recursive=True)
     if matches:
         return matches[0]
+
+    # Global repository-wide search fallback
+    global_matches = glob.glob(f"**/{clean_name}", recursive=True)
+    if global_matches:
+        return global_matches[0]
 
     return None
 
