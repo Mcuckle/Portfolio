@@ -368,7 +368,7 @@ elif selected_page == "Projects":
 
                 with st.expander(expander_label, expanded=False):
 
-                    # Robustly locate banner image for each project
+                    # Robustly locate banner image for each project (using capital 'Media' for Linux compatibility)
                     if folder_name == "01_nexus_telementry":
                         banner_candidates = [
                             f"projects/{folder_name}/media/Nexus photos/nexus_banner.jpg",
@@ -377,9 +377,9 @@ elif selected_page == "Projects":
                         ]
                     else:
                         banner_candidates = [
-                            f"projects/{folder_name}/media/Pitot tube photos/Figure 0 (banner).jpg",
-                            f"projects/{folder_name}/media/Figure 0 (banner).jpg",
-                            f"projects/{folder_name}/media/Pitot tube photos/Figure 0 (banner).png"
+                            f"projects/{folder_name}/Media/Pitot tube photos/Figure 0 (banner).jpg",
+                            f"projects/{folder_name}/Media/Figure 0 (banner).jpg",
+                            f"projects/{folder_name}/Media/Pitot tube photos/Figure 0 (banner).png"
                         ]
 
                     banner_path = next((p for p in banner_candidates if os.path.exists(p)), None)
@@ -442,10 +442,10 @@ elif selected_page == "Projects":
                         st.write(
                             "Access the official research documentation, CAD assembly reports, and CFD validation logs from the Space Physics group under RMIT University supervision.")
 
-                        # 1. Field Journal PDF Download
+                        # 1. Field Journal PDF Download (using capital 'Media')
                         field_journal_candidates = glob.glob(
-                            f"projects/{folder_name}/media/Pitot Tube Integration*.pdf") + glob.glob(
-                            f"projects/{folder_name}/media/*.pdf")
+                            f"projects/{folder_name}/Media/Pitot Tube Integration*.pdf") + glob.glob(
+                            f"projects/{folder_name}/Media/*.pdf")
                         pitot_journal_path = next(
                             (p for p in field_journal_candidates if "Journal" not in p and "ONPS" not in p),
                             field_journal_candidates[0] if field_journal_candidates else "")
@@ -465,9 +465,9 @@ elif selected_page == "Projects":
 
                         st.markdown("<br>", unsafe_allow_html=True)
 
-                        # 2. Journal Publication PDF Download
-                        pub_candidates = glob.glob(f"projects/{folder_name}/media/ONPS*.pdf") + glob.glob(
-                            f"projects/{folder_name}/media/*Publication*.pdf")
+                        # 2. Journal Publication PDF Download (using capital 'Media')
+                        pub_candidates = glob.glob(f"projects/{folder_name}/Media/ONPS*.pdf") + glob.glob(
+                            f"projects/{folder_name}/Media/*Publication*.pdf")
                         pitot_pub_path = pub_candidates[0] if pub_candidates else ""
 
                         if pitot_pub_path and os.path.exists(pitot_pub_path):
@@ -500,9 +500,11 @@ elif selected_page == "Projects":
                                         item_l = img_subset[idx]
                                         if sub_folder:
                                             filename_l = item_l['file'].replace(sub_folder, "")
-                                            f_path_l = f"projects/{folder_name}/media/{sub_folder}{filename_l}"
+                                            f_path_l = f"projects/{folder_name}/{sub_folder}{filename_l}"
                                         else:
-                                            f_path_l = f"projects/{folder_name}/media/{item_l['file']}"
+                                            # Default to Capital 'Media' for pitot tube Linux compatibility
+                                            target_dir = "Media" if folder_name == "02_hive_pitot_tube" else "media"
+                                            f_path_l = f"projects/{folder_name}/{target_dir}/{item_l['file']}"
 
                                         if os.path.exists(f_path_l):
                                             with st.container(border=True):
@@ -524,9 +526,10 @@ elif selected_page == "Projects":
                                         item_r = img_subset[idx + 1]
                                         if sub_folder:
                                             filename_r = item_r['file'].replace(sub_folder, "")
-                                            f_path_r = f"projects/{folder_name}/media/{sub_folder}{filename_r}"
+                                            f_path_r = f"projects/{folder_name}/{sub_folder}{filename_r}"
                                         else:
-                                            f_path_r = f"projects/{folder_name}/media/{item_r['file']}"
+                                            target_dir = "Media" if folder_name == "02_hive_pitot_tube" else "media"
+                                            f_path_r = f"projects/{folder_name}/{target_dir}/{item_r['file']}"
 
                                         if os.path.exists(f_path_r):
                                             with st.container(border=True):
@@ -541,9 +544,10 @@ elif selected_page == "Projects":
                                     item = img_subset[idx]
                                     if sub_folder:
                                         filename = item['file'].replace(sub_folder, "")
-                                        f_path = f"projects/{folder_name}/media/{sub_folder}{filename}"
+                                        f_path = f"projects/{folder_name}/{sub_folder}{filename}"
                                     else:
-                                        f_path = f"projects/{folder_name}/media/{item['file']}"
+                                        target_dir = "Media" if folder_name == "02_hive_pitot_tube" else "media"
+                                        f_path = f"projects/{folder_name}/{target_dir}/{item['file']}"
 
                                     if os.path.exists(f_path):
                                         with st.container(border=True):
@@ -557,16 +561,16 @@ elif selected_page == "Projects":
 
                         if folder_name == "02_hive_pitot_tube":
                             st.markdown("#### 1. Physical Principles & Flight Environment")
-                            render_portfolio_grid(images[0:4])
+                            render_portfolio_grid(images[0:4], sub_folder="Media/Pitot tube photos/")
                             st.markdown("---")
                             st.markdown("#### 2. CAD Modeling & Technical Drawings")
-                            render_portfolio_grid(images[4:11])
+                            render_portfolio_grid(images[4:11], sub_folder="Media/Pitot tube photos/")
                             st.markdown("---")
                             st.markdown("#### 3. Computational Meshing & Domain Setup")
-                            render_portfolio_grid(images[11:18])
+                            render_portfolio_grid(images[11:18], sub_folder="Media/Pitot tube photos/")
                             st.markdown("---")
                             st.markdown("#### 4. CFD Pressure Contours & Error Analysis")
-                            render_portfolio_grid(images[18:])
+                            render_portfolio_grid(images[18:], sub_folder="Media/Pitot tube photos/")
 
                             # --- CONCLUDING RESULTS SUMMARY FOR PITOT TUBE ---
                             st.markdown("---")
@@ -580,7 +584,7 @@ elif selected_page == "Projects":
                                 "for unguided high-powered sounding rocket avionics integration."
                             )
                         else:
-                            render_portfolio_grid(images, sub_folder="Nexus photos/")
+                            render_portfolio_grid(images, sub_folder="media/Nexus photos/")
 
                             # --- CONCLUDING RESULTS SUMMARY FOR NEXUS ---
                             st.markdown("---")
@@ -653,17 +657,30 @@ elif selected_page == "About & Skills":
     with col1:
         with st.container(border=True):
             st.markdown("#### Systems Engineering")
-            st.write("- Requirements Analysis\n- Trade Studies\n- Flight Readiness Reviews\n- Telemetry Architectures")
+            st.write(
+                "- Requirements Analysis\n"
+                "- Trade Studies\n"
+                "- Flight Readiness Reviews\n"
+                "- Telemetry Architectures"
+            )
     with col2:
         with st.container(border=True):
             st.markdown("#### Embedded Hardware")
             st.write(
-                "- SPI & I2C Protocols\n- Sensor Integration\n- Raspberry Pi & Microcontrollers\n- OLED Dashboard Displays")
+                "- SPI & I2C Protocols\n"
+                "- Sensor Integration\n"
+                "- Raspberry Pi & Microcontrollers\n"
+                "- OLED Dashboard Displays"
+            )
     with col3:
         with st.container(border=True):
             st.markdown("#### Laboratory & Lab Skills")
             st.write(
-                "- Oscilloscopes & Logic Analyzers\n- Soldering & PCB Prototyping\n- Multimeter Diagnostics\n- Mechanical Assembly")
+                "- Oscilloscopes & Logic Analyzers\n"
+                "- Soldering & PCB Prototyping\n"
+                "- Multimeter Diagnostics\n"
+                "- Mechanical Assembly"
+            )
 
 elif selected_page == "Credentials":
     st.title("Academic Credentials & Certificates")
