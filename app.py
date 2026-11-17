@@ -270,13 +270,15 @@ def get_base64_image(image_path):
     return ""
 
 
-# FOOLPROOF UNIVERSAL IMAGE RESOLVER (Guaranteed to find images across all platforms)
+# FOOLPROOF CASE-INSENSITIVE IMAGE RESOLVER (Handles .JPG vs .jpg, case variations, and subfolders)
 def resolve_image_path(folder_name, file_str):
     if not file_str:
         return None
 
-    clean_name = os.path.basename(file_str)  # e.g. "Figure 1.jpg"
+    clean_name = os.path.basename(file_str)
+    stem, ext = os.path.splitext(clean_name)
 
+    # 1. Direct explicit candidates check
     candidates = [
         f"projects/{folder_name}/{file_str}",
         f"projects/{folder_name}/Media/{file_str}",
@@ -288,20 +290,27 @@ def resolve_image_path(folder_name, file_str):
         f"projects/{folder_name}/Pitot tube photos/{clean_name}",
         f"projects/{folder_name}/Nexus photos/{clean_name}",
     ]
-
     for path in candidates:
         if os.path.exists(path):
             return path
 
-    # Recursive search inside the specific project folder
-    matches = glob.glob(f"projects/{folder_name}/**/{clean_name}", recursive=True)
-    if matches:
-        return matches[0]
+    # 2. Case-insensitive filename & extension scan inside the project folder
+    project_files = glob.glob(f"projects/{folder_name}/**/*.*", recursive=True)
+    for fpath in project_files:
+        fname = os.path.basename(fpath)
+        f_stem = os.path.splitext(fname)[0]
+        if fname.lower() == clean_name.lower() or f_stem.lower() == stem.lower():
+            if fpath.lower().endswith(('.jpg', '.jpeg', '.png')):
+                return fpath
 
-    # Global repository-wide search fallback
-    global_matches = glob.glob(f"**/{clean_name}", recursive=True)
-    if global_matches:
-        return global_matches[0]
+    # 3. Global repository-wide case-insensitive fallback scan
+    all_repo_files = glob.glob("**/*.*", recursive=True)
+    for fpath in all_repo_files:
+        fname = os.path.basename(fpath)
+        f_stem = os.path.splitext(fname)[0]
+        if fname.lower() == clean_name.lower() or f_stem.lower() == stem.lower():
+            if fpath.lower().endswith(('.jpg', '.jpeg', '.png')):
+                return fpath
 
     return None
 
