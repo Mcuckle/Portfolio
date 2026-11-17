@@ -490,22 +490,17 @@ elif selected_page == "Projects":
                         st.markdown("### Engineering Figures & Visuals Gallery")
 
 
-                        def render_portfolio_grid(img_subset, sub_folder=""):
+                        def render_portfolio_grid(img_subset):
                             for idx in range(0, len(img_subset), 2):
+                                target_dir = "Media" if folder_name == "02_hive_pitot_tube" else "media"
+
                                 if idx + 1 < len(img_subset):
                                     col_l, col_arr, col_r = st.columns([10, 2, 10], gap="small")
 
                                     # Left Figure
                                     with col_l:
                                         item_l = img_subset[idx]
-                                        if sub_folder:
-                                            filename_l = item_l['file'].replace(sub_folder, "")
-                                            f_path_l = f"projects/{folder_name}/{sub_folder}{filename_l}"
-                                        else:
-                                            # Default to Capital 'Media' for pitot tube Linux compatibility
-                                            target_dir = "Media" if folder_name == "02_hive_pitot_tube" else "media"
-                                            f_path_l = f"projects/{folder_name}/{target_dir}/{item_l['file']}"
-
+                                        f_path_l = f"projects/{folder_name}/{target_dir}/{item_l['file']}"
                                         if os.path.exists(f_path_l):
                                             with st.container(border=True):
                                                 st.image(f_path_l, use_container_width=True)
@@ -513,7 +508,7 @@ elif selected_page == "Projects":
                                                     f"<div style='font-size: 0.88rem; color: #d1d5db; line-height: 1.4;'><b>{item_l.get('caption', '')}</b></div>",
                                                     unsafe_allow_html=True)
                                         else:
-                                            st.warning(f"Missing image: {item_l['file']}")
+                                            st.warning(f"Missing image: {f_path_l}")
 
                                     # Center Flow Arrow
                                     with col_arr:
@@ -524,13 +519,7 @@ elif selected_page == "Projects":
                                     # Right Figure
                                     with col_r:
                                         item_r = img_subset[idx + 1]
-                                        if sub_folder:
-                                            filename_r = item_r['file'].replace(sub_folder, "")
-                                            f_path_r = f"projects/{folder_name}/{sub_folder}{filename_r}"
-                                        else:
-                                            target_dir = "Media" if folder_name == "02_hive_pitot_tube" else "media"
-                                            f_path_r = f"projects/{folder_name}/{target_dir}/{item_r['file']}"
-
+                                        f_path_r = f"projects/{folder_name}/{target_dir}/{item_r['file']}"
                                         if os.path.exists(f_path_r):
                                             with st.container(border=True):
                                                 st.image(f_path_r, use_container_width=True)
@@ -538,17 +527,11 @@ elif selected_page == "Projects":
                                                     f"<div style='font-size: 0.88rem; color: #d1d5db; line-height: 1.4;'><b>{item_r.get('caption', '')}</b></div>",
                                                     unsafe_allow_html=True)
                                         else:
-                                            st.warning(f"Missing image: {item_r['file']}")
+                                            st.warning(f"Missing image: {f_path_r}")
                                 else:
                                     # Single remaining image if odd count
                                     item = img_subset[idx]
-                                    if sub_folder:
-                                        filename = item['file'].replace(sub_folder, "")
-                                        f_path = f"projects/{folder_name}/{sub_folder}{filename}"
-                                    else:
-                                        target_dir = "Media" if folder_name == "02_hive_pitot_tube" else "media"
-                                        f_path = f"projects/{folder_name}/{target_dir}/{item['file']}"
-
+                                    f_path = f"projects/{folder_name}/{target_dir}/{item['file']}"
                                     if os.path.exists(f_path):
                                         with st.container(border=True):
                                             st.image(f_path, use_container_width=True)
@@ -556,21 +539,21 @@ elif selected_page == "Projects":
                                                 f"<div style='font-size: 0.88rem; color: #d1d5db; line-height: 1.4;'><b>{item.get('caption', '')}</b></div>",
                                                 unsafe_allow_html=True)
                                     else:
-                                        st.warning(f"Missing image: {item['file']}")
+                                        st.warning(f"Missing image: {f_path}")
 
 
                         if folder_name == "02_hive_pitot_tube":
                             st.markdown("#### 1. Physical Principles & Flight Environment")
-                            render_portfolio_grid(images[0:4], sub_folder="Media/Pitot tube photos/")
+                            render_portfolio_grid(images[0:4])
                             st.markdown("---")
                             st.markdown("#### 2. CAD Modeling & Technical Drawings")
-                            render_portfolio_grid(images[4:11], sub_folder="Media/Pitot tube photos/")
+                            render_portfolio_grid(images[4:11])
                             st.markdown("---")
                             st.markdown("#### 3. Computational Meshing & Domain Setup")
-                            render_portfolio_grid(images[11:18], sub_folder="Media/Pitot tube photos/")
+                            render_portfolio_grid(images[11:18])
                             st.markdown("---")
                             st.markdown("#### 4. CFD Pressure Contours & Error Analysis")
-                            render_portfolio_grid(images[18:], sub_folder="Media/Pitot tube photos/")
+                            render_portfolio_grid(images[18:])
 
                             # --- CONCLUDING RESULTS SUMMARY FOR PITOT TUBE ---
                             st.markdown("---")
@@ -584,7 +567,7 @@ elif selected_page == "Projects":
                                 "for unguided high-powered sounding rocket avionics integration."
                             )
                         else:
-                            render_portfolio_grid(images, sub_folder="media/Nexus photos/")
+                            render_portfolio_grid(images)
 
                             # --- CONCLUDING RESULTS SUMMARY FOR NEXUS ---
                             st.markdown("---")
