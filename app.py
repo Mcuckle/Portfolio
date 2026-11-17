@@ -13,6 +13,17 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Hide Streamlit branding, header, menu, and footer watermark
+hide_streamlit_style = """
+<style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    [data-testid="stToolbar"] {visibility: hidden !important;}
+</style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 # 2. Modern Floating Sidebar & Professional UI Custom CSS
 st.markdown("""
 <style>
@@ -800,7 +811,7 @@ elif selected_page == "Credentials":
         if os.path.exists(testamur_app_pdf):
             with open(testamur_app_pdf, "rb") as pdf_file:
                 st.download_button(
-                    label="Download Testamur (PDF)",
+                    label="DownloadTestamur (PDF)",
                     data=pdf_file,
                     file_name="Testamur_Associate_Degree_Applied_Science.pdf",
                     mime="application/pdf",
