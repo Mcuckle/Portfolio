@@ -270,6 +270,36 @@ def get_base64_image(image_path):
     return ""
 
 
+# FOOLPROOF IMAGE PATH RESOLVER (Handles exact metadata paths across Linux/Windows)
+def resolve_image_path(folder_name, file_str):
+    if not file_str:
+        return None
+
+    clean_name = os.path.basename(file_str)
+
+    candidates = [
+        f"projects/{folder_name}/{file_str}",
+        f"projects/{folder_name}/Media/{file_str}",
+        f"projects/{folder_name}/media/{file_str}",
+        f"projects/{folder_name}/Media/Pitot tube photos/{clean_name}",
+        f"projects/{folder_name}/media/Pitot tube photos/{clean_name}",
+        f"projects/{folder_name}/Media/Nexus photos/{clean_name}",
+        f"projects/{folder_name}/media/Nexus photos/{clean_name}",
+        f"projects/{folder_name}/Nexus photos/{clean_name}",
+    ]
+
+    for path in candidates:
+        if os.path.exists(path):
+            return path
+
+    # Recursive fallback search across the entire project directory
+    matches = glob.glob(f"projects/{folder_name}/**/{clean_name}", recursive=True)
+    if matches:
+        return matches[0]
+
+    return None
+
+
 # 4. Page Router
 if selected_page == "Home":
     col_home_text, col_home_img = st.columns([3, 1], gap="large")
@@ -368,21 +398,23 @@ elif selected_page == "Projects":
 
                 with st.expander(expander_label, expanded=False):
 
-                    # Robustly locate banner image for each project (using capital 'Media' for Linux compatibility)
+                    # Robustly locate banner image for each project
                     if folder_name == "01_nexus_telementry":
                         banner_candidates = [
-                            f"projects/{folder_name}/media/Nexus photos/nexus_banner.jpg",
-                            f"projects/{folder_name}/media/Nexus photos/Figure 0 (banner).jpg",
-                            f"projects/{folder_name}/media/nexus_banner.jpg"
+                            resolve_image_path(folder_name, "Nexus photos/nexus_banner.jpg"),
+                            resolve_image_path(folder_name, "nexus_banner.jpg"),
+                            resolve_image_path(folder_name, "Figure 0 (banner).jpg"),
+                            resolve_image_path(folder_name, "Figure 1.jpg")
                         ]
                     else:
                         banner_candidates = [
-                            f"projects/{folder_name}/Media/Pitot tube photos/Figure 0 (banner).jpg",
-                            f"projects/{folder_name}/Media/Figure 0 (banner).jpg",
-                            f"projects/{folder_name}/Media/Pitot tube photos/Figure 0 (banner).png"
+                            resolve_image_path(folder_name, "Pitot tube photos/Figure 0 (banner).jpg"),
+                            resolve_image_path(folder_name, "Figure 0 (banner).jpg"),
+                            resolve_image_path(folder_name, "Pitot tube photos/Figure 0 (banner).png"),
+                            resolve_image_path(folder_name, "Pitot tube photos/Figure 1.jpg")
                         ]
 
-                    banner_path = next((p for p in banner_candidates if os.path.exists(p)), None)
+                    banner_path = next((p for p in banner_candidates if p and os.path.exists(p)), None)
                     if banner_path:
                         st.image(banner_path, use_container_width=True)
                     else:
@@ -403,6 +435,10 @@ elif selected_page == "Projects":
 
                         # 1. Field Journal PDF Download
                         journal_path = f"projects/{folder_name}/media/Spacecraft Systems Engineering Environmental Telemetry & IoT Integration Field Journal.pdf"
+                        if not os.path.exists(journal_path):
+                            matches = glob.glob(f"projects/{folder_name}/**/*.pdf", recursive=True)
+                            journal_path = matches[0] if matches else journal_path
+
                         if os.path.exists(journal_path):
                             with open(journal_path, "rb") as pdf_file:
                                 st.download_button(
@@ -419,8 +455,8 @@ elif selected_page == "Projects":
                         st.markdown("<br>", unsafe_allow_html=True)
 
                         # 2. Project Poster JPG Download/View
-                        poster_candidates = glob.glob(f"projects/{folder_name}/media/*.jpg") + glob.glob(
-                            f"projects/{folder_name}/media/*.png")
+                        poster_candidates = glob.glob(f"projects/{folder_name}/**/*.jpg", recursive=True) + glob.glob(
+                            f"projects/{folder_name}/**/*.png", recursive=True)
                         nexus_poster_path = next(
                             (p for p in poster_candidates if "banner" not in p.lower() and "nexus" not in p.lower()),
                             poster_candidates[0] if poster_candidates else "")
@@ -442,10 +478,10 @@ elif selected_page == "Projects":
                         st.write(
                             "Access the official research documentation, CAD assembly reports, and CFD validation logs from the Space Physics group under RMIT University supervision.")
 
-                        # 1. Field Journal PDF Download (using capital 'Media')
+                        # 1. Field Journal PDF Download
                         field_journal_candidates = glob.glob(
-                            f"projects/{folder_name}/Media/Pitot Tube Integration*.pdf") + glob.glob(
-                            f"projects/{folder_name}/Media/*.pdf")
+                            f"projects/{folder_name}/**/*Pitot*.pdf", recursive=True) + glob.glob(
+                            f"projects/{folder_name}/**/*.pdf", recursive=True)
                         pitot_journal_path = next(
                             (p for p in field_journal_candidates if "Journal" not in p and "ONPS" not in p),
                             field_journal_candidates[0] if field_journal_candidates else "")
@@ -465,9 +501,9 @@ elif selected_page == "Projects":
 
                         st.markdown("<br>", unsafe_allow_html=True)
 
-                        # 2. Journal Publication PDF Download (using capital 'Media')
-                        pub_candidates = glob.glob(f"projects/{folder_name}/Media/ONPS*.pdf") + glob.glob(
-                            f"projects/{folder_name}/Media/*Publication*.pdf")
+                        # 2. Journal Publication PDF Download
+                        pub_candidates = glob.glob(f"projects/{folder_name}/**/*ONPS*.pdf", recursive=True) + glob.glob(
+                            f"projects/{folder_name}/**/*Publication*.pdf", recursive=True)
                         pitot_pub_path = pub_candidates[0] if pub_candidates else ""
 
                         if pitot_pub_path and os.path.exists(pitot_pub_path):
@@ -492,23 +528,21 @@ elif selected_page == "Projects":
 
                         def render_portfolio_grid(img_subset):
                             for idx in range(0, len(img_subset), 2):
-                                target_dir = "Media" if folder_name == "02_hive_pitot_tube" else "media"
-
                                 if idx + 1 < len(img_subset):
                                     col_l, col_arr, col_r = st.columns([10, 2, 10], gap="small")
 
                                     # Left Figure
                                     with col_l:
                                         item_l = img_subset[idx]
-                                        f_path_l = f"projects/{folder_name}/{target_dir}/{item_l['file']}"
-                                        if os.path.exists(f_path_l):
+                                        f_path_l = resolve_image_path(folder_name, item_l['file'])
+                                        if f_path_l and os.path.exists(f_path_l):
                                             with st.container(border=True):
                                                 st.image(f_path_l, use_container_width=True)
                                                 st.markdown(
                                                     f"<div style='font-size: 0.88rem; color: #d1d5db; line-height: 1.4;'><b>{item_l.get('caption', '')}</b></div>",
                                                     unsafe_allow_html=True)
                                         else:
-                                            st.warning(f"Missing image: {f_path_l}")
+                                            st.warning(f"Missing image: {item_l['file']}")
 
                                     # Center Flow Arrow
                                     with col_arr:
@@ -519,27 +553,27 @@ elif selected_page == "Projects":
                                     # Right Figure
                                     with col_r:
                                         item_r = img_subset[idx + 1]
-                                        f_path_r = f"projects/{folder_name}/{target_dir}/{item_r['file']}"
-                                        if os.path.exists(f_path_r):
+                                        f_path_r = resolve_image_path(folder_name, item_r['file'])
+                                        if f_path_r and os.path.exists(f_path_r):
                                             with st.container(border=True):
                                                 st.image(f_path_r, use_container_width=True)
                                                 st.markdown(
                                                     f"<div style='font-size: 0.88rem; color: #d1d5db; line-height: 1.4;'><b>{item_r.get('caption', '')}</b></div>",
                                                     unsafe_allow_html=True)
                                         else:
-                                            st.warning(f"Missing image: {f_path_r}")
+                                            st.warning(f"Missing image: {item_r['file']}")
                                 else:
                                     # Single remaining image if odd count
                                     item = img_subset[idx]
-                                    f_path = f"projects/{folder_name}/{target_dir}/{item['file']}"
-                                    if os.path.exists(f_path):
+                                    f_path = resolve_image_path(folder_name, item['file'])
+                                    if f_path and os.path.exists(f_path):
                                         with st.container(border=True):
                                             st.image(f_path, use_container_width=True)
                                             st.markdown(
                                                 f"<div style='font-size: 0.88rem; color: #d1d5db; line-height: 1.4;'><b>{item.get('caption', '')}</b></div>",
                                                 unsafe_allow_html=True)
                                     else:
-                                        st.warning(f"Missing image: {f_path}")
+                                        st.warning(f"Missing image: {item['file']}")
 
 
                         if folder_name == "02_hive_pitot_tube":
