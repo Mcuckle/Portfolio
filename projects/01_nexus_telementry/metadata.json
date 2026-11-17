@@ -1,0 +1,139 @@
+{
+  "title": "NEMS / NEXUS Telemetry System",
+  "category": "Embedded Systems & IoT",
+  "type": "University / Independent",
+  "year": "2025",
+  "summary": "Raspberry Pi-based environmental telemetry system involving sensors, SPI/I2C communication protocols, OLED displays, data logging, and IoT dashboards.",
+  "technologies": ["Raspberry Pi 4", "Python", "SPI/I2C", "Sensors", "ThingSpeak IoT"],
+  "skills": ["Systems Integration", "Embedded Hardware", "Data Logging", "CAD Enclosure Design"],
+  "images": [
+    {
+      "file": "Figure 1.jpg",
+      "caption": "Figure 1. CAD model and manufactured photo of the NEXUS habitat module."
+    },
+    {
+      "file": "Figure 2.jpg",
+      "caption": "Figure 2. Angled view of the NEXUS module under ambient lighting."
+    },
+    {
+      "file": "Figure 3.jpg",
+      "caption": "Figure 3. Lateral profile view of the NEXUS module under ambient lighting."
+    },
+    {
+      "file": "Figure 4.jpg",
+      "caption": "Figure 4. 12V DC power distribution test connected to the internal LED strip."
+    },
+    {
+      "file": "Figure 5.jpg",
+      "caption": "Figure 5. Internal view of the NEXUS module with the LED strip installed."
+    },
+    {
+      "file": "Figure 6.jpg",
+      "caption": "Figure 6. Manual toggle switch configuration for the internal LED illumination system."
+    },
+    {
+      "file": "Figure 7.jpg",
+      "caption": "Figure 7. Close-up view of the illuminated internal workspace of the NEXUS module."
+    },
+    {
+      "file": "Figure 8.jpg",
+      "caption": "Figure 8. System schematic diagram for the NEXUS habitat module's central onboard computer."
+    },
+    {
+      "file": "Figure 9.jpg",
+      "caption": "Figure 9. Initial hardware prototype and iteration of the NEXUS onboard computer."
+    },
+    {
+      "file": "Figure 10.jpg",
+      "caption": "Figure 10. Preliminary sensor validation screen showing live magnetometer, temperature, and pressure readouts."
+    },
+    {
+      "file": "Figure 11.jpg",
+      "caption": "Figure 11. Secondary validation testing setup utilizing a 7-inch plug-in display monitor."
+    },
+    {
+      "file": "Figure 12.jpg",
+      "caption": "Figure 12. Software development environment for the NEMS Raspberry Pi monitoring system, displaying SPI interfaces and OLED GPIO configurations."
+    },
+    {
+      "file": "Figure 13.jpg",
+      "caption": "Figure 13. SPI bus topology diagram featuring a Raspberry Pi host connected to two client devices via independent chip select lines."
+    },
+    {
+      "file": "Figure 14.jpg",
+      "caption": "Figure 14. I2C bus topology diagram illustrating a Raspberry Pi host connected to two client devices via shared SCL and SDA lines."
+    },
+    {
+      "file": "Figure 15.jpg",
+      "caption": "Figure 15. CAD models of the Adafruit sensor breakout and Waveshare 1.3-inch OLED display."
+    },
+    {
+      "file": "Figure 16.jpg",
+      "caption": "Figure 16. Adafruit accelerometer module with GPIO pin headers soldered in place."
+    },
+    {
+      "file": "Figure 17.jpg",
+      "caption": "Figure 17. Waveshare 1.3-inch OLED display module featuring 64x128 resolution and SPI/I2C interfaces."
+    },
+    {
+      "file": "Figure 18.jpg",
+      "caption": "Figure 18. Soldering power, ground, data, and clock lines to the system's copper prototyping board."
+    },
+    {
+      "file": "Figure 19.jpg",
+      "caption": "Figure 19. Breadboard bench testing of multiple I2C sensors and SPI OLED displays."
+    },
+    {
+      "file": "Figure 20.jpg",
+      "caption": "Figure 20. Assembly and soldering phase for custom hardware components."
+    },
+    {
+      "file": "Figure 21.jpg",
+      "caption": "Figure 21. Integrated validation testing of temperature, pressure, humidity, and magnetometer sensors alongside OLED displays."
+    },
+    {
+      "file": "Figure 22.jpg",
+      "caption": "Figure 22. Bench testing individual OLED screens to verify independent data streaming."
+    },
+    {
+      "file": "Figure 23.jpg",
+      "caption": "Figure 23. Full display array testing featuring four Waveshare 1.3-inch OLED screens showing unique telemetry parameters."
+    },
+    {
+      "file": "Figure 24.jpg",
+      "caption": "Figure 24. NEXUS onboard computer displaying real-time environmental metrics and system status updates."
+    },
+    {
+      "file": "Figure 25.jpg",
+      "caption": "Figure 25. Initial live sensor data web status report deployed via GitHub for remote metric tracking."
+    },
+    {
+      "file": "Figure 26.jpg",
+      "caption": "Figure 26. Live operational telemetry dashboard tracking continuous environmental and accelerometer parameters."
+    },
+    {
+      "file": "Figure 27.jpg",
+      "caption": "Figure 27. NEXUS main onboard computer and display array integrated within the custom 3D-printed housing."
+    },
+    {
+      "file": "Figure 28.jpg",
+      "caption": "Figure 28. Subsystem housing positioned within a NEXUS module bay and illuminated by internal LEDs."
+    },
+    {
+      "file": "Figure 29.jpg",
+      "caption": "Figure 29. ThingSpeak cloud telemetry dashboard displaying real-time dynamic graphs updated for redundancy."
+    },
+    {
+      "file": "Figure 30.jpg",
+      "caption": "Figure 30. Environmental sensors mounted along the interior structural rail for unobstructed data collection."
+    },
+    {
+      "file": "Figure 31.jpg",
+      "caption": "Figure 31. Local data logging interface recording sensor metrics to a comma-separated values (CSV) file."
+    },
+    {
+      "file": "Figure 32.jpg",
+      "caption": "Figure 32. Fully integrated NEXUS habitat module featuring active lighting, onboard processing, sensor suite, and telemetry dashboard housing."
+    }
+  ]
+}

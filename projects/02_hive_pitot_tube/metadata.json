@@ -1,0 +1,98 @@
+{
+    "title": "CFD Investigation of Pitot-Static Tube Performance",
+    "category": "Aerospace Engineering & CFD",
+    "type": "Research Capstone Project",
+    "year": "2025",
+    "summary": "Computational fluid dynamics analysis of a nose-cone-mounted pitot-static probe across varying angles of attack at Mach 0.6.",
+    "technologies": ["ANSYS Fluent", "Onshape", "Fusion 360", "Python", "CFD"],
+    "images": [
+        {
+            "file": "Pitot tube photos/Figure 1.jpg",
+            "caption": "Figure 1 - RMIT HIVE rocket launching from Serpentine, Victoria:."
+        },
+        {
+            "file": "Pitot tube photos/Figure 2.jpg",
+            "caption": "Figure 2 - Internal Pressure Transducer Schema: Overview of pneumatic channel architecture and transducer routing connecting total and static lines to differential pressure sensors (NASA, 2015)."
+        },
+        {
+            "file": "Pitot tube photos/Figure 3.jpg",
+            "caption": "Figure 3 - Angle of Attack Incidence Definition: Geometric definition of vehicle tilt relative to oncoming freestream velocity vectors, governing local streamline curvature and off-axis stagnation point migration."
+        },
+        {
+            "file": "Pitot tube photos/Figure 4.jpg",
+            "caption": "Figure 4 - Design Methodology Workflow: High-level parametric design and CFD execution pipeline spanning CAD generation in Onshape to ANSYS RANS verification."
+        },
+        {
+            "file": "Pitot tube photos/Figure 5.jpg",
+            "caption": "Figure 5 - Probe Geometry Dimensions: Dimensioned layout of the 165 mm probe body, wall thickness, and dual axial channel configuration."
+        },
+        {
+            "file": "Pitot tube photos/Figure 6.jpg",
+            "caption": "Figure 6 - Probe and Nose-Cone Assembly: Dimensioned engineering layout highlighting internal dual-channel routing and mechanical mounting within the RMIT HIVE nose cone."
+        },
+        {
+            "file": "Pitot tube photos/Figure 7.jpg",
+            "caption": "Figure 7 - Rear Pneumatic Exit Geometry: Detailed view of the 39.4-degree angled rearward outlets sized for flexible line connection to the avionics bay."
+        },
+        {
+            "file": "Pitot tube photos/Figure 8.jpg",
+            "caption": "Figure 8 - Centring Ring Integration: Mechanical constraint architecture maintaining repeatable alignment along the cone axis under aerodynamic loading."
+        },
+        {
+            "file": "Pitot tube photos/Figure 9.jpg",
+            "caption": "Figure 9 - Differential Pressure Sensor Module: Integrated avionics hardware module capturing time-resolved pressure differential across total and static lines."
+        },
+        {
+            "file": "Pitot tube photos/Figure 10.jpg",
+            "caption": "Figure 10 - CAD Multi-View Orthographics: Comprehensive orthographic projection detailing outer diameter, channel lengths, and port positioning."
+        },
+        {
+            "file": "Pitot tube photos/Figure 11.jpg",
+            "caption": "Figure 11 - Scaled Assembly Drawing: Detailed engineering blueprint showcasing alignment features and boundary constraints."
+        },
+        {
+            "file": "Pitot tube photos/Figure 12.jpg",
+            "caption": "Figure 12 - Full Domain Velocity Streamlines: Global flow visualization across the 10-meter cubic enclosure domain surrounding the vehicle."
+        },
+        {
+            "file": "Pitot tube photos/Figure 13.jpg",
+            "caption": "Figure 13 - Multi-Incidence Flow Field Progression: Comparative multi-panel overview showing streamline divergence across increasing angles of attack."
+        },
+        {
+            "file": "Pitot tube photos/Figure 14.jpg",
+            "caption": "Figure 14 - Wall-Resolved Computational Mesh: Discretized fluid domain emphasizing fine prismatic inflation layers around static ports and stagnation inlet to resolve wall shear stress."
+        },
+        {
+            "file": "Pitot tube photos/Figure 15.jpg",
+            "caption": "Figure 15 - Far-Field Coarsening Grid: Element-quality distribution showing structured near-body cells with graded coarsening toward outer far-field boundaries."
+        },
+        {
+            "file": "Pitot tube photos/Figure 16.jpg",
+            "caption": "Figure 16 - Static Port Local Mesh Refinement: High-resolution grid density isolating the 1.0 mm radial static ports for accurate local pressure extraction."
+        },
+        {
+            "file": "Pitot tube photos/Figure 17.jpg",
+            "caption": "Figure 17 - Turbulence Model Validation Slice: Detailed view of wall-resolved k-omega SST inflation layers ensuring proper y+ compliance."
+        },
+        {
+            "file": "Pitot tube photos/Figure 18.jpg",
+            "caption": "Figure 18 - Mesh Quality Element Distribution: Element metric evaluation ensuring solution stability and minimal cell skewness throughout the fluid volume."
+        },
+        {
+            "file": "Pitot tube photos/Figure 19.jpg",
+            "caption": "Figure 19 - Baseline Static-Pressure Contour (M=0.6, alpha=0 degrees): Verification contour showing stagnation core pressure at the pitot inlet and symmetric acceleration along the cone profile."
+        },
+        {
+            "file": "Pitot tube photos/Figure 20.jpg",
+            "caption": "Figure 20 - Off-Axis Pressure Contour Sweep: Multi-incidence pressure distribution contours demonstrating progressive asymmetry and stagnation point migration."
+        },
+        {
+            "file": "Pitot tube photos/Figure 21.jpg",
+            "caption": "Figure 21 - Normalised Total-Pressure Error vs. Alpha: Quantitative evaluation showing total-pressure error remaining within the +/- 1% acceptance band strictly up to alpha <= 5 degrees."
+        },
+        {
+            "file": "Pitot tube photos/Figure 22.jpg",
+            "caption": "Figure 22 - Historical NACA Reference Benchmark Grid: Classical NASA/NACA validation curve defining the +/- 1% insensitivity window for cylindrical pitot geometries across off-axis flow."
+        }
+    ]
+}
