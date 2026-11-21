@@ -13,13 +13,32 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Hide Streamlit branding, header, menu, and footer watermark
+# Hide Streamlit branding and toolbar while keeping the mobile sidebar toggle visible
 hide_streamlit_style = """
 <style>
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
-    header {visibility: hidden;}
     [data-testid="stToolbar"] {visibility: hidden !important;}
+    [data-testid="stStatusWidget"] {visibility: hidden !important;}
+
+    /* Keep header container transparent and pass-through so the mobile sidebar button stays clickable */
+    header[data-testid="stHeader"] {
+        background: transparent !important;
+        pointer-events: none;
+    }
+
+    /* Re-enable visibility and clicks specifically for the sidebar toggle button */
+    [data-testid="stExpandSidebarButton"],
+    [data-testid="collapsedControl"] {
+        visibility: visible !important;
+        pointer-events: auto !important;
+        color: #f8fafc !important;
+        background-color: rgba(17, 19, 24, 0.85) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-radius: 8px !important;
+        margin-top: 8px !important;
+        margin-left: 8px !important;
+    }
 </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
