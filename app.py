@@ -30,12 +30,38 @@ st.markdown("""
     /* Global dark background override */
     .stApp {
         background-color: #0b0f19 !important;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
     }
 
     /* Ensure main content container acts as the precise coordinate anchor for centering */
     .stMainBlockContainer {
         position: relative !important;
         z-index: 1;
+    }
+
+    /* Force high-contrast light text across main content on iOS/Safari/in-app browsers */
+    .stMainBlockContainer,
+    .stMainBlockContainer p,
+    .stMainBlockContainer span,
+    .stMainBlockContainer div,
+    .stMainBlockContainer li,
+    .stMainBlockContainer label,
+    .stMarkdown,
+    .stMarkdown p,
+    .stMarkdown span,
+    .stMarkdown li,
+    h1, h2, h3, h4, h5, h6 {
+        color: #f8fafc !important;
+        -webkit-text-fill-color: #f8fafc !important;
+    }
+
+    /* Keep info/alert boxes readable with high-contrast text */
+    [data-testid="stAlert"] p,
+    [data-testid="stAlert"] div {
+        color: #e2e8f0 !important;
+        -webkit-text-fill-color: #e2e8f0 !important;
     }
 
     /* Centered Cinematic Warp Core anchored dynamically to the main content pane */
@@ -97,6 +123,7 @@ st.markdown("""
         background-color: rgba(255, 255, 255, 0.03) !important;
         border: 1px solid rgba(255, 255, 255, 0.06) !important;
         color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
         border-radius: 10px !important;
         width: 100% !important;
         font-weight: 500 !important;
@@ -167,6 +194,7 @@ st.markdown("""
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] label[data-checked="true"] p,
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] label:has(input:checked) p {
         color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
         font-weight: 600;
     }
 
@@ -811,7 +839,7 @@ elif selected_page == "Credentials":
         if os.path.exists(testamur_app_pdf):
             with open(testamur_app_pdf, "rb") as pdf_file:
                 st.download_button(
-                    label="DownloadTestamur (PDF)",
+                    label="Download Testamur (PDF)",
                     data=pdf_file,
                     file_name="Testamur_Associate_Degree_Applied_Science.pdf",
                     mime="application/pdf",
